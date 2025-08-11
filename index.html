@@ -1,496 +1,370 @@
-import React from "react";
-import { motion } from "framer-motion";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Label } from "@/components/ui/label";
-import {
-  Star,
-  ThumbsUp,
-  Mail,
-  Phone,
-  Download,
-  ExternalLink,
-  Award,
-  MapPin,
-  Briefcase,
-  Languages,
-  Clock,
-  Check,
-  Sparkles,
-  ChevronLeft,
-  ChevronRight,
-  Info,
-} from "lucide-react";
+import React, { useState } from "react";
 
-/**
- * KoRo-inspirierte Produktdetailseite, um ein Bewerbungsprofil wie ein Produkt darzustellen.
- * Stil-Anleihen: klare Top-Bar mit Vorteils-Badges, linke Mediengalerie, rechte Info-/Kaufspalte,
- * Bullet-Highlights, Varianten-/Mengen-Auswahl (zweckentfremdet), Tabs (Beschreibung/FAQs/Referenzen),
- * "Nährwerte"-Tabelle als "Profilwerte" usw. – keine Markenassets, nur Layout/Interaktionsmuster.
- */
+// Selbstständiges, EINZELNES React-File ohne externe UI-Libs oder Tailwind.
+// Alles Styling ist in <style> enthalten, damit das Design im Canvas sofort sichtbar ist.
 
-const profile = {
-  name: "Alex Beispiel",
-  role: "UX/UI Designer:in",
-  tagline: "Macht Komplexes einfach und Schönes nützlich.",
-  location: "Wien, AT",
-  years: 5,
-  availability: "ab September 2025",
-  photoSet: [
-    "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1521572267360-ee0c2909dc94?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop",
-  ],
-  bullets: [
-    "Fokus auf nutzerzentrierte Flows",
-    "Stark in Figma & Prototyping",
-    "Geübt in AB-Tests & Research",
-    "Barrierefreiheit im Blick",
-    "Teamwork & saubere Handoffs",
-  ],
-  skills: ["Design Systems", "A/B Testing", "Accessibility", "Design Ops", "Workshop-Moderation"],
-  languages: [
-    { label: "Deutsch", level: "C2" },
-    { label: "Englisch", level: "C1" },
-    { label: "Italienisch", level: "B2" },
-  ],
-  projects: [
-    {
-      title: "Abo-Checkout Redesign",
-      impact: "+18% Conversion",
-      desc: "Discovery → Prototyp → AB-Test.",
-      link: "#",
-    },
-    {
-      title: "Design System Aufbau",
-      impact: "-35% UI-Inkonsistenzen",
-      desc: "Token-basiert, Storybook-Doku.",
-      link: "#",
-    },
-    {
-      title: "Mobile Onboarding",
-      impact: "+22% Activation",
-      desc: "Iterativ mit Nutzertests.",
-      link: "#",
-    },
-  ],
-  references: [
-    { name: "Lea K.", role: "Head of Product", text: "Bringt Struktur in jedes Chaos.", rating: 5 },
-    { name: "Milan R.", role: "Engineering Manager", text: "Schnelle Iteration, top Handoffs.", rating: 5 },
-  ],
-};
+export default function ProfileKoRoSingleFile() {
+  const [activeImg, setActiveImg] = useState(0);
+  const [tab, setTab] = useState("beschreibung");
+  const [focus, setFocus] = useState("UX/UI");
+  const [pack, setPack] = useState("Ein Gespräch");
 
-const RatingStars = ({ value = 5 }) => (
-  <div className="flex items-center gap-1">
-    {Array.from({ length: 5 }).map((_, i) => (
-      <Star key={i} className={`h-4 w-4 ${i < value ? "fill-current" : "opacity-30"}`} />
-    ))}
-  </div>
-);
-
-const Thumb = ({ src, active, onClick }) => (
-  <button
-    onClick={onClick}
-    className={`overflow-hidden rounded-xl border ${active ? "ring-2 ring-black" : "opacity-80 hover:opacity-100"}`}
-  >
-    {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={src} alt="Profilansicht" className="h-16 w-16 object-cover" />
-  </button>
-);
-
-export default function ProfileKoRoStyle() {
-  const [active, setActive] = React.useState(0);
-  const [variant, setVariant] = React.useState("UX/UI");
-  const [contactPack, setContactPack] = React.useState("Ein Gespräch");
+  const profile = {
+    name: "Alex Beispiel",
+    role: "UX/UI Designer:in",
+    tagline: "Macht Komplexes einfach und Schönes nützlich.",
+    location: "Wien, AT",
+    years: 5,
+    availability: "ab September 2025",
+    photos: [
+      "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1521572267360-ee0c2909dc94?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop",
+    ],
+    bullets: [
+      "Fokus auf nutzerzentrierte Flows",
+      "Stark in Figma & Prototyping",
+      "Geübt in AB-Tests & Research",
+      "Barrierefreiheit im Blick",
+      "Teamwork & saubere Handoffs",
+    ],
+    projects: [
+      { title: "Abo-Checkout Redesign", impact: "+18% Conversion", desc: "Discovery → Prototyp → AB-Test.", link: "#" },
+      { title: "Design System Aufbau", impact: "-35% UI-Inkonsistenzen", desc: "Token-basiert, Storybook-Doku.", link: "#" },
+      { title: "Mobile Onboarding", impact: "+22% Activation", desc: "Iterativ mit Nutzertests.", link: "#" },
+    ],
+    refs: [
+      { name: "Lea K.", role: "Head of Product", text: "Bringt Struktur in jedes Chaos." },
+      { name: "Milan R.", role: "Engineering Manager", text: "Schnelle Iteration, top Handoffs." },
+    ],
+  };
 
   return (
-    <div className="min-h-screen bg-[#f7f3ec] text-neutral-900">
-      {/* Design Tokens (leicht KoRo-angelehnt) */}
+    <div className="app">
       <style>{`
-        :root {
-          --koro-bg: #f7f3ec; /* Cream */
-          --koro-surface: #ffffff;
-          --koro-ink: #111111; /* Fast schwarz */
-          --koro-muted: #6b7280; /* Neutral-500 */
-          --koro-border: #e5e7eb; /* Neutral-200 */
-          --koro-accent: #111111; /* Buttons, Dots */
-          --koro-radius: 14px;
-          --koro-shadow: 0 1px 0 rgba(0,0,0,.05), 0 8px 24px rgba(0,0,0,.06);
+        :root{
+          --bg:#f7f3ec; /* Cream */
+          --surface:#fff;
+          --ink:#111;
+          --muted:#6b7280;
+          --border:#e5e7eb;
+          --radius:14px;
+          --shadow:0 1px 0 rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.06);
         }
-        .koro-card { border-radius: var(--koro-radius); box-shadow: var(--koro-shadow); }
-        .koro-btn-primary { background: var(--koro-ink); color: white; border-radius: 999px; }
-        .koro-btn-primary:hover { opacity: .9; }
-        .koro-btn-outline { border-color: var(--koro-ink); color: var(--koro-ink); border-radius: 999px; }
-        .koro-btn-outline:hover { background: #11111108; }
-        .koro-chip { border-radius: 999px; border: 1px solid var(--koro-border); padding: 2px 10px; }
-        .koro-list li { position: relative; padding-left: 18px; }
-        .koro-list li::before { content: ""; position: absolute; left: 4px; top: .65em; width: 6px; height: 6px; background: var(--koro-ink); border-radius: 999px; }
+        *{box-sizing:border-box}
+        body,html,#root{height:100%}
+        .app{min-height:100vh;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+        a{color:inherit}
+        .container{max-width:1120px;margin:0 auto;padding:0 16px}
+        .topline{background:#fff;border-bottom:1px solid var(--border);font-size:12px}
+        .topline .bar{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+        .dots{display:inline-block;width:6px;height:6px;border-radius:999px;background:var(--ink);margin-right:8px}
+
+        header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid var(--border);z-index:40}
+        header .row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+        .brand{display:flex;align-items:center;gap:10px}
+        .brand .logo{width:32px;height:32px;border-radius:999px;background:var(--ink)}
+        .nav{display:flex;gap:20px;font-size:14px}
+        .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ink);border-radius:999px;padding:8px 14px;background:#fff;cursor:pointer}
+        .pill.primary{background:var(--ink);color:#fff}
+        .pill:hover{opacity:.9}
+
+        .crumbs{font-size:12px;color:#666;padding:12px 0}
+        .crumbs span.sep{margin:0 6px}
+
+        main.grid{display:grid;grid-template-columns:1fr;gap:24px;padding:8px 0 80px}
+        @media(min-width:900px){main.grid{grid-template-columns:7fr 5fr}}
+
+        .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+        .gallery .main{position:relative}
+        .gallery .main img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#f3f4f6;border-top-left-radius:var(--radius);border-top-right-radius:var(--radius)}
+        .gallery .thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:12px}
+        .thumbs button{border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer}
+        .thumbs button.active{outline:2px solid var(--ink)}
+        .thumbs img{width:100%;height:64px;object-fit:cover}
+        .carousel{position:absolute;right:12px;bottom:12px;background:rgba(255,255,255,.9);border-radius:999px;box-shadow:var(--shadow);display:flex;gap:4px;padding:4px}
+        .iconbtn{border:none;background:transparent;border-radius:999px;padding:6px;cursor:pointer}
+        .iconbtn:hover{background:#f3f4f6}
+
+        .meta h1{font-size:28px;margin:4px 0 0}
+        .muted{color:#666;font-size:14px}
+        .badge{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 10px;font-size:12px;background:#fff}
+        .bullets{margin:12px 0 0 0;padding-left:18px}
+        .bullets li{position:relative;margin:6px 0;padding-left:12px}
+        .bullets li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:6px;background:var(--ink);border-radius:999px}
+
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+        .info-tile{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff}
+        .info-tile .label{color:#666;font-size:12px}
+        .cta{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-top:16px}
+
+        .tabs{margin-top:32px}
+        .tabbar{display:flex;gap:8px;flex-wrap:wrap}
+        .tab{border:1px solid var(--border);background:#fff;border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}
+        .tab.active{background:#111;color:#fff;border-color:#111}
+
+        .desc{display:grid;grid-template-columns:1fr;gap:24px;margin-top:16px}
+        @media(min-width:900px){.desc{grid-template-columns:2fr 1fr}}
+        .values .row{display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:6px 0;font-size:14px}
+
+        .cards{display:grid;grid-template-columns:1fr;gap:16px}
+        @media(min-width:900px){.cards{grid-template-columns:repeat(3,1fr)}}
+        .project{padding:14px}
+        .proj-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:14px}
+
+        .refs{display:grid;grid-template-columns:1fr;gap:16px}
+        @media(min-width:900px){.refs{grid-template-columns:1fr 1fr}}
+
+        .form{display:grid;grid-template-columns:1fr;gap:12px}
+        @media(min-width:900px){.form{grid-template-columns:repeat(3,1fr)}}
+        input,textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-size:14px;background:#fff}
+        textarea{grid-column:1 / -1;min-height:120px}
+
+        footer{background:#f1ebdf;border-top:1px solid var(--border);padding:40px 0;font-size:14px}
+        .fgrid{display:grid;grid-template-columns:1fr;gap:20px}
+        @media(min-width:900px){.fgrid{grid-template-columns:1fr 1fr 1fr}}
+        .copy{color:#777;font-size:12px;margin-top:16px}
       `}</style>
 
-      {/* Vorteil-Bar */}
-      <div className="w-full border-b bg-white text-xs">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2">
-          <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-2"><span className="inline-block h-1.5 w-1.5 rounded-full bg-black"/> Schnelle Antwort</span>
-            <span className="inline-flex items-center gap-2"><span className="inline-block h-1.5 w-1.5 rounded-full bg-black"/> Transparente Zusammenarbeit</span>
-            <span className="hidden md:inline-flex items-center gap-2"><span className="inline-block h-1.5 w-1.5 rounded-full bg-black"/> Faire Konditionen</span>
+      {/* Topline */}
+      <div className="topline">
+        <div className="container bar">
+          <div style={{display:"flex",gap:24,alignItems:"center"}}>
+            <span><span className="dots"/>Schnelle Antwort</span>
+            <span><span className="dots"/>Transparente Zusammenarbeit</span>
+            <span className="hide-sm"><span className="dots"/>Faire Konditionen</span>
           </div>
-          <div className="hidden md:block text-neutral-500">Österreich | DE</div>
+          <div className="muted">Österreich | DE</div>
         </div>
       </div>
 
-      {/* Header/Nav */}
-      <header className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-full bg-black" />
-            <span className="text-sm font-medium tracking-wide">Profil-Deluxe</span>
+      {/* Header */}
+      <header>
+        <div className="container row">
+          <div className="brand">
+            <div className="logo"/>
+            <span style={{fontSize:14,fontWeight:600,letterSpacing:.2}}>Profil-Deluxe</span>
           </div>
-          <nav className="hidden gap-6 md:flex text-sm">
-            <a className="hover:underline" href="#desc">Beschreibung</a>
-            <a className="hover:underline" href="#faq">FAQs</a>
-            <a className="hover:underline" href="#refs">Referenzen</a>
+          <nav className="nav">
+            <a href="#desc">Beschreibung</a>
+            <a href="#faq">FAQs</a>
+            <a href="#refs">Referenzen</a>
           </nav>
-          <div className="flex items-center gap-2">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="md:hidden">Menü</Button>
-              </SheetTrigger>
-              <SheetContent side="right">
-                <SheetHeader>
-                  <SheetTitle>Navigation</SheetTitle>
-                </SheetHeader>
-                <div className="mt-6 grid gap-4 text-sm">
-                  <a className="hover:underline" href="#desc">Beschreibung</a>
-                  <a className="hover:underline" href="#faq">FAQs</a>
-                  <a className="hover:underline" href="#refs">Referenzen</a>
-                </div>
-              </SheetContent>
-            </Sheet>
-            <Button size="sm" className="gap-2 koro-btn-outline border"><Download className="h-4 w-4" /> CV herunterladen</Button>
-          </div>
+          <button className="pill">📥 CV herunterladen</button>
         </div>
       </header>
 
-      {/* Breadcrumb + Titelzeile */}
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="flex items-center gap-2 py-4 text-xs text-neutral-500">
-          <a href="#" className="hover:underline">Überblick</a>
-          <span>/</span>
-          <a href="#" className="hover:underline">Kreative Bewerbungen</a>
-          <span>/</span>
-          <span className="text-neutral-800">{profile.name}</span>
+      {/* Breadcrumbs */}
+      <div className="container">
+        <div className="crumbs">
+          <a href="#">Überblick</a><span className="sep">/</span>
+          <a href="#">Kreative Bewerbungen</a><span className="sep">/</span>
+          <span style={{color:"#222"}}>{profile.name}</span>
         </div>
       </div>
 
-      {/* Hauptbereich: linke Galerie, rechte Info-Spalte */}
-      <main className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pb-24 pt-2 md:grid-cols-12">
+      {/* Main */}
+      <main className="container grid">
         {/* Galerie */}
-        <section className="md:col-span-7">
-          <Card className="overflow-hidden koro-card">
-            <CardContent className="p-0">
-              <div className="relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <motion.img
-                  key={active}
-                  initial={{ opacity: 0.4, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.25 }}
-                  src={profile.photoSet[active]}
-                  alt={profile.name}
-                  className="aspect-square w-full object-cover bg-neutral-100"
-                />
-                <div className="absolute bottom-3 right-3 flex items-center gap-2 rounded-full bg-white/90 px-2 py-1 shadow">
-                  <button
-                    onClick={() => setActive((a) => (a - 1 + profile.photoSet.length) % profile.photoSet.length)}
-                    className="rounded-full p-1 hover:bg-neutral-100"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  <button
-                    onClick={() => setActive((a) => (a + 1) % profile.photoSet.length)}
-                    className="rounded-full p-1 hover:bg-neutral-100"
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
-              <div className="grid grid-cols-5 gap-2 p-3">
-                {profile.photoSet.map((src, i) => (
-                  <button key={i} onClick={() => setActive(i)} className={`overflow-hidden rounded-xl border ${i === active ? "ring-2 ring-black" : "opacity-80 hover:opacity-100"}`}>
-                    <img src={src} alt="Profilansicht" className="h-16 w-16 object-cover" />
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <section className="gallery card">
+          <div className="main">
+            <img src={profile.photos[activeImg]} alt={profile.name} />
+            <div className="carousel">
+              <button className="iconbtn" onClick={()=>setActiveImg((activeImg-1+profile.photos.length)%profile.photos.length)}>◀</button>
+              <button className="iconbtn" onClick={()=>setActiveImg((activeImg+1)%profile.photos.length)}>▶</button>
+            </div>
+          </div>
+          <div className="thumbs">
+            {profile.photos.map((src,i)=> (
+              <button key={i} className={i===activeImg?"active":""} onClick={()=>setActiveImg(i)}>
+                <img src={src} alt={`Ansicht ${i+1}`} />
+              </button>
+            ))}
+          </div>
         </section>
 
-        {/* Info-/CTA-Spalte (angelehnt an KoRo) */}
-        <aside className="md:col-span-5">
-          <div className="mb-2 flex items-center gap-2">
-            <Badge className="koro-chip">Profil</Badge>
-            <span className="text-xs text-neutral-500">{profile.role}</span>
+        {/* Info / CTA */}
+        <aside>
+          <div className="badge">Profil</div>
+          <div className="meta">
+            <h1>{profile.name}</h1>
+            <div className="muted" style={{marginTop:4}}>{profile.role} · {profile.tagline}</div>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">{profile.name}</h1>
-          <div className="mt-1 text-sm text-neutral-600">{profile.tagline}</div>
 
-          {/* Sterne + "Preis"-Ersatz */}
-          <div className="mt-3 flex items-end justify-between">
-            <div className="flex items-center gap-2 text-sm">
-              <RatingStars value={5} />
-              <span className="text-neutral-600">(12) Referenzen</span>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-semibold">Verfügbar</div>
-              <div className="text-xs text-neutral-500">{profile.availability}</div>
+          {/* "Preis"-Ersatz */}
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginTop:12}}>
+            <div className="muted">★★★★★ (12) Referenzen</div>
+            <div style={{textAlign:"right"}}>
+              <div style={{fontSize:24,fontWeight:600}}>Verfügbar</div>
+              <div className="muted">{profile.availability}</div>
             </div>
           </div>
 
-          {/* Bullet-Highlights */}
-          <ul className="koro-list mt-4 space-y-1 pl-5 text-sm">
-            {profile.bullets.map((b) => (
-              <li key={b}>{b}</li>
-            ))}
+          <ul className="bullets">
+            {profile.bullets.map(b=> <li key={b}>{b}</li>)}
           </ul>
 
-          {/* Varianten (Sorte) → Rolle/Schwerpunkt */}
-          <div className="mt-6 grid gap-3 text-sm">
-            <div>
-              <Label className="mb-1 block">Schwerpunkt</Label>
-              <div className="flex flex-wrap gap-2">
-                {["UX/UI", "Product Design", "Research"].map((v) => (
-                  <Button key={v} variant={variant === v ? "default" : "outline"} size="sm" onClick={() => setVariant(v)} className={variant === v ? "koro-btn-primary" : "koro-btn-outline border"}>
-                    {v}
-                  </Button>
-                ))}
-              </div>
+          {/* Varianten */}
+          <div style={{marginTop:16}}>
+            <div style={{fontSize:12,color:"#666",marginBottom:6}}>Schwerpunkt</div>
+            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+              {["UX/UI","Product Design","Research"].map(v=> (
+                <button key={v} className={`pill ${focus===v?"primary":""}`} onClick={()=>setFocus(v)}>{v}</button>
+              ))}
             </div>
-            <div>
-              <Label className="mb-1 block">Kontaktpaket</Label>
-              <div className="grid grid-cols-3 gap-2">
-                {["Ein Gespräch", "Portfolio-Review", "Mini-Workshop"].map((v) => (
-                  <Button key={v} variant={contactPack === v ? "default" : "outline"} size="sm" onClick={() => setContactPack(v)} className={contactPack === v ? "koro-btn-primary" : "koro-btn-outline border"}>
-                    {v}
-                  </Button>
-                ))}
-              </div>
+          </div>
+          <div style={{marginTop:12}}>
+            <div style={{fontSize:12,color:"#666",marginBottom:6}}>Kontaktpaket</div>
+            <div className="grid-2">
+              {["Ein Gespräch","Portfolio-Review","Mini-Workshop"].map(v=> (
+                <button key={v} className={`pill ${pack===v?"primary":""}`} onClick={()=>setPack(v)}>{v}</button>
+              ))}
             </div>
           </div>
 
-          {/* CTA-Zeile */}
-          <div className="mt-4 grid grid-cols-3 items-center gap-3">
-            <div className="col-span-2">
-              <Button className="w-full gap-2 koro-btn-primary"><Mail className="h-4 w-4" /> Jetzt anfragen</Button>
-            </div>
-            <Button variant="outline" className="gap-2 koro-btn-outline border"><Phone className="h-4 w-4" /> Rückruf</Button>
+          <div className="cta">
+            <button className="pill primary">✉️ Jetzt anfragen</button>
+            <button className="pill">📞 Rückruf</button>
           </div>
-          <div className="mt-2 text-xs text-neutral-500">Sofort antwortbereit · i. d. R. innerhalb von 24h</div>
+          <div className="muted" style={{marginTop:6}}>Sofort antwortbereit · i. d. R. innerhalb von 24h</div>
 
-          {/* Trust-Badges */}
-          <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
-            <div className="rounded-lg border bg-white px-3 py-2 text-center">Kostenlose Erstberatung</div>
-            <div className="rounded-lg border bg-white px-3 py-2 text-center">Transparente Preise</div>
-            <div className="rounded-lg border bg-white px-3 py-2 text-center">Schnelle Terminfindung</div>
-          </div>
-
-          {/* Mini-Metadaten */}
-          <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded-lg border bg-white p-3">
-              <div className="text-neutral-500">Standort</div>
-              <div className="font-medium">{profile.location}</div>
-            </div>
-            <div className="rounded-lg border bg-white p-3">
-              <div className="text-neutral-500">Erfahrung</div>
-              <div className="font-medium">{profile.years}+ Jahre</div>
-            </div>
-            <div className="rounded-lg border bg-white p-3">
-              <div className="text-neutral-500">Arbeitsweise</div>
-              <div className="font-medium">Remote & Onsite</div>
-            </div>
-            <div className="rounded-lg border bg-white p-3">
-              <div className="text-neutral-500">Sprachen</div>
-              <div className="font-medium">DE, EN, IT</div>
-            </div>
+          <div className="grid-2" style={{marginTop:16}}>
+            <div className="info-tile"><div className="label">Standort</div><div>{profile.location}</div></div>
+            <div className="info-tile"><div className="label">Erfahrung</div><div>{profile.years}+ Jahre</div></div>
+            <div className="info-tile"><div className="label">Arbeitsweise</div><div>Remote & Onsite</div></div>
+            <div className="info-tile"><div className="label">Sprachen</div><div>DE, EN, IT</div></div>
           </div>
         </aside>
-
-        {/* Tabs-Bereich */}
-        <section id="desc" className="md:col-span-12">
-          <Tabs defaultValue="beschreibung" className="w-full">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <TabsList>
-                <TabsTrigger value="beschreibung">Beschreibung</TabsTrigger>
-                <TabsTrigger value="faq">FAQs</TabsTrigger>
-                <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
-                <TabsTrigger value="refs">Referenzen</TabsTrigger>
-              </TabsList>
-              <div className="text-xs text-neutral-500">Profil-ID: ALEX-DELUXE-001</div>
-            </div>
-
-            {/* Beschreibung + Profilwerte */}
-            <TabsContent value="beschreibung" className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-12">
-              <div className="md:col-span-8 space-y-4">
-                <h2 className="text-lg font-semibold">Für den Alltag im Team</h2>
-                <p className="text-sm leading-relaxed text-neutral-700">
-                  Alex gestaltet verständliche Interfaces, moderiert Workshops und bringt Struktur in Prozesse. Erfahrung von Research bis Delivery,
-                  mit Gespür für Barrierefreiheit und Impact.
-                </p>
-                <p className="text-sm leading-relaxed text-neutral-700">
-                  Ob kurz für ein Sparring oder länger im Produktteam – die Zusammenarbeit ist pragmatisch, transparent und iterativ.
-                </p>
-              </div>
-              <div className="md:col-span-4">
-                <Card className="koro-card">
-                  <CardHeader>
-                    <CardTitle className="text-base">Profilwerte (Ø)</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div className="flex items-center justify-between border-b py-1"><span>Research</span><span>80%</span></div>
-                      <div className="flex items-center justify-between border-b py-1"><span>Prototyping</span><span>85%</span></div>
-                      <div className="flex items-center justify-between border-b py-1"><span>UI Design</span><span>90%</span></div>
-                      <div className="flex items-center justify-between border-b py-1"><span>HTML/CSS</span><span>75%</span></div>
-                      <div className="flex items-center justify-between py-1"><span>Teamwork</span><span>100%</span></div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            {/* FAQs */}
-            <TabsContent id="faq" value="faq" className="mt-6">
-              <Accordion type="single" collapsible>
-                <AccordionItem value="1">
-                  <AccordionTrigger>Wie läuft die Zusammenarbeit ab?</AccordionTrigger>
-                  <AccordionContent>
-                    Kickoff-Workshop, Scope-Definition, zweiwöchige Iterationen, wöchentliche Syncs.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="2">
-                  <AccordionTrigger>Welche Tools werden genutzt?</AccordionTrigger>
-                  <AccordionContent>
-                    Figma, FigJam, Notion, Jira, Maze, UsabilityHub – je nach Team-Setup.
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="3">
-                  <AccordionTrigger>Verfügbarkeit & Modell</AccordionTrigger>
-                  <AccordionContent>
-                    Ab September 2025, 3–5 Tage/Woche, Freelance oder Festanstellung nach Absprache.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </TabsContent>
-
-            {/* Portfolio */}
-            <TabsContent value="portfolio" className="mt-6">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                {profile.projects.map((p) => (
-                  <Card key={p.title} className="koro-card">
-                    <CardHeader>
-                      <CardTitle className="text-base">{p.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="rounded-lg bg-neutral-50 p-3 text-sm">{p.desc}</div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="inline-flex items-center gap-1 text-neutral-700"><ThumbsUp className="h-4 w-4" /> {p.impact}</span>
-                        <a href={p.link} className="inline-flex items-center gap-1 text-neutral-800 hover:underline">Details <ExternalLink className="h-3 w-3" /></a>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-
-            {/* Referenzen */}
-            <TabsContent id="refs" value="refs" className="mt-6">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {profile.references.map((r) => (
-                  <Card key={r.name} className="koro-card">
-                    <CardHeader className="flex flex-row items-center justify-between">
-                      <div>
-                        <CardTitle className="text-base">{r.name}</CardTitle>
-                        <div className="text-xs text-neutral-500">{r.role}</div>
-                      </div>
-                      <RatingStars value={r.rating} />
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-neutral-700">{r.text}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </section>
-
-        {/* Kontaktformular */}
-        <section id="kontakt" className="md:col-span-12">
-          <Card className="koro-card">
-            <CardHeader>
-              <CardTitle>Kontakt aufnehmen</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <Input placeholder="Dein Name" />
-                <Input type="email" placeholder="E-Mail" />
-                <Input placeholder="Unternehmen / Rolle" />
-                <Textarea className="md:col-span-3" rows={4} placeholder="Deine Nachricht..." />
-                <div className="md:col-span-3 flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-neutral-500">
-                    <Award className="h-4 w-4" />
-                    <span>Antwort innerhalb eines Werktages</span>
-                  </div>
-                  <Button className="gap-2 koro-btn-primary">
-                    <Sparkles className="h-4 w-4" /> Abschicken
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t bg-[#f1ebdf] py-10 text-sm">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 md:grid-cols-3">
-          <div>
-            <div className="mb-2 text-neutral-800">Über dieses Mockup</div>
-            <p className="text-neutral-600">
-              Produktdetail-Layout im KoRo-Stil, übersetzt auf ein Bewerbungsprofil. Alle Inhalte Platzhalter.
-            </p>
-          </div>
-          <div>
-            <div className="mb-2 text-neutral-800">Schnellzugriff</div>
-            <div className="flex flex-wrap gap-2">
-              <a href="#desc" className="underline">Beschreibung</a>
-              <a href="#faq" className="underline">FAQs</a>
-              <a href="#refs" className="underline">Referenzen</a>
-            </div>
-          </div>
-          <div>
-            <div className="mb-2 text-neutral-800">Kontakt</div>
-            <div className="space-y-1 text-neutral-600">
-              <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> alex@example.com</div>
-              <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> +43 660 000000</div>
-            </div>
-          </div>
+      {/* TABS */}
+      <section id="desc" className="container tabs">
+        <div className="tabbar">
+          {[
+            {key:"beschreibung", label:"Beschreibung"},
+            {key:"faq", label:"FAQs"},
+            {key:"portfolio", label:"Portfolio"},
+            {key:"refs", label:"Referenzen"},
+          ].map(t=> (
+            <button key={t.key} className={`tab ${tab===t.key?"active":""}`} onClick={()=>setTab(t.key)}>{t.label}</button>
+          ))}
         </div>
-        <div className="mx-auto mt-8 max-w-6xl px-4 text-xs text-neutral-500">© {new Date().getFullYear()} Profil-Deluxe</div>
+
+        {tab==="beschreibung" && (
+          <div className="desc">
+            <div>
+              <h3 style={{fontSize:18,margin:"8px 0 8px"}}>Für den Alltag im Team</h3>
+              <p className="muted" style={{lineHeight:1.6}}>
+                Alex gestaltet verständliche Interfaces, moderiert Workshops und bringt Struktur in Prozesse. Erfahrung von Research bis Delivery,
+                mit Gespür für Barrierefreiheit und Impact.
+              </p>
+              <p className="muted" style={{lineHeight:1.6}}>
+                Ob kurz für ein Sparring oder länger im Produktteam – die Zusammenarbeit ist pragmatisch, transparent und iterativ.
+              </p>
+            </div>
+            <div className="card" style={{padding:14}}>
+              <div style={{fontWeight:600,marginBottom:8}}>Profilwerte (Ø)</div>
+              <div className="values">
+                <div className="row"><span>Research</span><span>80%</span></div>
+                <div className="row"><span>Prototyping</span><span>85%</span></div>
+                <div className="row"><span>UI Design</span><span>90%</span></div>
+                <div className="row"><span>HTML/CSS</span><span>75%</span></div>
+                <div className="row" style={{borderBottom:"none"}}><span>Teamwork</span><span>100%</span></div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {tab==="faq" && (
+          <div style={{marginTop:16}}>
+            <details className="card" style={{padding:14,marginBottom:8}}>
+              <summary><strong>Wie läuft die Zusammenarbeit ab?</strong></summary>
+              <div className="muted" style={{marginTop:8}}>Kickoff-Workshop, Scope-Definition, zweiwöchige Iterationen, wöchentliche Syncs.</div>
+            </details>
+            <details className="card" style={{padding:14,marginBottom:8}}>
+              <summary><strong>Welche Tools werden genutzt?</strong></summary>
+              <div className="muted" style={{marginTop:8}}>Figma, FigJam, Notion, Jira, Maze, UsabilityHub – je nach Team-Setup.</div>
+            </details>
+            <details className="card" style={{padding:14}}>
+              <summary><strong>Verfügbarkeit & Modell</strong></summary>
+              <div className="muted" style={{marginTop:8}}>Ab September 2025, 3–5 Tage/Woche, Freelance oder Festanstellung nach Absprache.</div>
+            </details>
+          </div>
+        )}
+
+        {tab==="portfolio" && (
+          <div className="cards" style={{marginTop:16}}>
+            {profile.projects.map(p=> (
+              <div key={p.title} className="card project">
+                <div style={{fontWeight:600}}>{p.title}</div>
+                <div className="muted" style={{marginTop:8}}>{p.desc}</div>
+                <div className="proj-foot">
+                  <span className="muted">👍 {p.impact}</span>
+                  <a href={p.link} style={{textDecoration:"underline"}}>Details ↗</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {tab==="refs" && (
+          <div className="refs" style={{marginTop:16}}>
+            {profile.refs.map(r=> (
+              <div key={r.name} className="card" style={{padding:14}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div>
+                    <div style={{fontWeight:600}}>{r.name}</div>
+                    <div className="muted" style={{fontSize:12}}>{r.role}</div>
+                  </div>
+                  <div>★★★★★</div>
+                </div>
+                <p className="muted" style={{marginTop:8}}>{r.text}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Kontakt */}
+      <section id="kontakt" className="container" style={{marginTop:24}}>
+        <div className="card" style={{padding:16}}>
+          <div style={{fontWeight:600,marginBottom:8}}>Kontakt aufnehmen</div>
+          <form className="form">
+            <input placeholder="Dein Name" />
+            <input type="email" placeholder="E-Mail" />
+            <input placeholder="Unternehmen / Rolle" />
+            <textarea placeholder="Deine Nachricht..." />
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gridColumn:"1 / -1"}}>
+              <div className="muted" style={{fontSize:12}}>⏱️ Antwort innerhalb eines Werktages</div>
+              <button type="button" className="pill primary">✨ Abschicken</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <footer>
+        <div className="container">
+          <div className="fgrid">
+            <div>
+              <div style={{color:"#222",marginBottom:8}}>Über dieses Mockup</div>
+              <p className="muted">Produktdetail-Layout im KoRo-Stil, übersetzt auf ein Bewerbungsprofil. Alle Inhalte Platzhalter.</p>
+            </div>
+            <div>
+              <div style={{color:"#222",marginBottom:8}}>Schnellzugriff</div>
+              <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+                <a href="#desc" style={{textDecoration:"underline"}}>Beschreibung</a>
+                <a href="#faq" style={{textDecoration:"underline"}}>FAQs</a>
+                <a href="#refs" style={{textDecoration:"underline"}}>Referenzen</a>
+              </div>
+            </div>
+            <div>
+              <div style={{color:"#222",marginBottom:8}}>Kontakt</div>
+              <div className="muted">alex@example.com</div>
+              <div className="muted">+43 660 000000</div>
+            </div>
+          </div>
+          <div className="copy">© {new Date().getFullYear()} Profil-Deluxe</div>
+        </div>
       </footer>
     </div>
   );
