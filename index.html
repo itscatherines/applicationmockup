@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  $1
+  <title>Cecilia Vludwig – Profil-Deluxe (KoRo-Stil Mockup)</title>
   <!-- Fonts vorab laden, damit sie sicher greifen (optional, aber hilft auf GitHub Pages) -->
   <link rel="preload" href="./assets/fonts/Radian%20Book.otf" as="font" type="font/otf" crossorigin>
   <link rel="preload" href="./assets/fonts/velourraw-trial-semibold.ttf" as="font" type="font/ttf" crossorigin>
@@ -134,6 +134,10 @@
     .fgrid{display:grid;grid-template-columns:1fr;gap:20px}
     @media(min-width:900px){.fgrid{grid-template-columns:1fr 1fr 1fr}}
     .copy{color:#777;font-size:12px;margin-top:16px}
+  /* Subtabs in FAQ */
+    .subtabbar{display:flex;gap:8px;flex-wrap:wrap}
+    .subtab{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+    .subtab.active{background:var(--btn);color:#fff;border-color:var(--btn)}
   </style>
 </head>
 <body>
@@ -179,7 +183,7 @@
   <main class="container grid">
     <section class="gallery card">
       <div class="main">
-        <img id="mainImg" src="assets/cecilia_portrait.png" alt="Cecilia Vludwig" />
+        <img id="mainImg" src="./assets/photos/cecilia-1.png" alt="Cecilia Vludwig" />
         <div class="carousel">
           <button class="iconbtn" onclick="prevImg()">◀</button>
           <button class="iconbtn" onclick="nextImg()">▶</button>
@@ -265,16 +269,91 @@
         </div>
       </div>
     </div>
+    <a id="faq"></a>
+    <div id="panel-faq" class="panel" style="display:none;margin-top:16px">
+      <!-- FAQ-Subtabs: mehrere Unterbereiche -->
+      <div class="subtabbar">
+        <button class="subtab active" data-subtab="ablauf" onclick="switchSubtab(event)">Ablauf</button>
+        <button class="subtab" data-subtab="tools" onclick="switchSubtab(event)">Tools</button>
+        <button class="subtab" data-subtab="verfugbarkeit" onclick="switchSubtab(event)">Verfügbarkeit</button>
+        <button class="subtab" data-subtab="ausbildung" onclick="switchSubtab(event)">Ausbildung</button>
+        <button class="subtab" data-subtab="erfahrung" onclick="switchSubtab(event)">Arbeitserfahrung</button>
+        <button class="subtab" data-subtab="hobbys" onclick="switchSubtab(event)">Hobbys</button>
+        <button class="subtab" data-subtab="koro" onclick="switchSubtab(event)">KoRo‑Lieblingsprodukte</button>
+      </div>
 
-    $1  <details class="card" style="padding:14px;margin-top:8px">
-        <summary><strong>Lieblingsprodukte von KoRo</strong></summary>
-        <ul class="bullets" style="margin-top:8px">
-          <li>Protein Bar Deluxe Vegan Raspberry Choc</li>
-          <li>Geröstete und gesalzene Bohnen-Erbsen-Mix</li>
-          <li>Bio Süßkartoffelchips</li>
-          <li>Bio Kakaonibs</li>
-        </ul>
-      </details>
+      <!-- Ablauf -->
+      <div id="sub-ablauf" class="subpanel" style="margin-top:12px">
+        <details class="card" style="padding:14px;margin-bottom:8px">
+          <summary><strong>Wie läuft die Zusammenarbeit ab?</strong></summary>
+          <div class="muted" style="margin-top:8px">Kickoff-Workshop, Scope-Definition, zweiwöchige Iterationen, wöchentliche Syncs.</div>
+        </details>
+      </div>
+
+      <!-- Tools -->
+      <div id="sub-tools" class="subpanel" style="display:none;margin-top:12px">
+        <details class="card" style="padding:14px;margin-bottom:8px">
+          <summary><strong>Welche Tools werden genutzt?</strong></summary>
+          <div class="muted" style="margin-top:8px">Figma, FigJam, Notion, Jira, Maze, UsabilityHub – je nach Team-Setup.</div>
+        </details>
+      </div>
+
+      <!-- Verfügbarkeit -->
+      <div id="sub-verfugbarkeit" class="subpanel" style="display:none;margin-top:12px">
+        <details class="card" style="padding:14px">
+          <summary><strong>Verfügbarkeit & Modell</strong></summary>
+          <div class="muted" style="margin-top:8px">Ab September 2025, 3–5 Tage/Woche, Freelance oder Festanstellung nach Absprache.</div>
+        </details>
+      </div>
+
+      <!-- Ausbildung -->
+      <div id="sub-ausbildung" class="subpanel" style="display:none;margin-top:12px">
+        <details class="card" style="padding:14px;margin-bottom:8px">
+          <summary><strong>Ausbildung</strong></summary>
+          <ul class="bullets" style="margin-top:8px">
+            <li>BA Kommunikationsdesign – FH XY (2017–2020)</li>
+            <li>UX Bootcamp – ABC Academy (2021)</li>
+            <li>Laufende Kurse: Accessibility & Design Systems</li>
+          </ul>
+        </details>
+      </div>
+
+      <!-- Arbeitserfahrung -->
+      <div id="sub-erfahrung" class="subpanel" style="display:none;margin-top:12px">
+        <details class="card" style="padding:14px;margin-bottom:8px">
+          <summary><strong>Arbeitserfahrung</strong></summary>
+          <ul class="bullets" style="margin-top:8px">
+            <li>Product Designer – Firma A (2022–2025): Checkout-Redesign, +18% Conversion</li>
+            <li>UX/UI Designer – Studio B (2020–2022): Design System, -35% Inkonsistenzen</li>
+            <li>Freelance (laufend): Mobile Onboarding, +22% Activation</li>
+          </ul>
+        </details>
+      </div>
+
+      <!-- Hobbys -->
+      <div id="sub-hobbys" class="subpanel" style="display:none;margin-top:12px">
+        <details class="card" style="padding:14px;margin-bottom:8px">
+          <summary><strong>Hobbys</strong></summary>
+          <ul class="bullets" style="margin-top:8px">
+            <li>Siebdruck & Lettering</li>
+            <li>Trailrunning</li>
+            <li>Kaffee-Röstexperimente</li>
+          </ul>
+        </details>
+      </div>
+
+      <!-- KoRo Lieblingsprodukte -->
+      <div id="sub-koro" class="subpanel" style="display:none;margin-top:12px">
+        <details class="card" style="padding:14px">
+          <summary><strong>Lieblingsprodukte von KoRo</strong></summary>
+          <ul class="bullets" style="margin-top:8px">
+            <li>Protein Bar Deluxe Vegan Raspberry Choc</li>
+            <li>Geröstete und gesalzene Bohnen-Erbsen-Mix</li>
+            <li>Bio Süßkartoffelchips</li>
+            <li>Bio Kakaonibs</li>
+          </ul>
+        </details>
+      </div>
     </div>
 
     <div id="panel-portfolio" class="panel" style="display:none;margin-top:16px">
@@ -350,7 +429,7 @@
         </div>
         <div>
           <div style="color:#222;margin-bottom:8px">Kontakt</div>
-          <div class="muted">cecilia@example.com</div>
+          <div class="muted">alex@example.com</div>
           <div class="muted">+43 660 000000</div>
         </div>
       </div>
@@ -365,10 +444,13 @@
     //   Beispiel: ./assets/photos/cecilia-1.jpg, ./assets/photos/cecilia-2.jpg, ./assets/photos/cecilia-3.jpg
     //   → Trage die relativen Pfade hier ein (GitHub Pages verlangt relative Pfade!)
     // Option B (extern): Lass die Unsplash-Links stehen oder ersetze sie durch eigene URLs.
+    // 📸 EIGENE BILDER – bitte Dateien hier ablegen und Namen anpassen
+    // Lege deine Fotos unter ./assets/photos/ ab.
+    // Achte bei GitHub Pages auf exakte Schreibweise (Groß/Klein) und relative Pfade (./assets/...)
     const imgs = [
-      'assets/ceclia_portrait.png',
-      'assets/ceclias_mix.png',
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop'
+      './assets/photos/cecilia-1.png',
+      './assets/photos/cecilia-2.png',
+      './assets/photos/cecilia-3.jpg'
     ];
     let idx = 0;
     const mainImg = document.getElementById('mainImg');
@@ -387,6 +469,14 @@
       const key = e.target.dataset.tab;
       document.querySelectorAll('.panel').forEach(p=>p.style.display='none');
       document.getElementById('panel-'+key).style.display = '';
+    }
+    // Subtab-Switch für FAQs
+    function switchSubtab(e){
+      document.querySelectorAll('.subtab').forEach(btn=>btn.classList.remove('active'));
+      e.target.classList.add('active');
+      const key = e.target.dataset.subtab;
+      document.querySelectorAll('.subpanel').forEach(p=>p.style.display='none');
+      document.getElementById('sub-'+key).style.display='';
     }
     function setFocus(el){
       el.parentElement.querySelectorAll('.pill').forEach(b=>b.classList.remove('primary'));
